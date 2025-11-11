@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
-import trainerPhoto from './assets/photo_2024-07-08_02-01-22.jpg?url'
+const trainerPlaceholder =
+  'https://images.unsplash.com/photo-1525253086316-d0c936c814f8?q=80&w=1080&auto=format&fit=crop'
 
 type ScheduleKey = 'weekdays' | 'weekend'
 
@@ -335,7 +336,7 @@ export default function App() {
             </div>
             <div className="about__grid">
               <div className="about__media">
-                <img src={trainerPhoto} alt="Башмакова Алёна — тренер K-pop" loading="lazy" />
+                <img src={trainerPlaceholder} alt="Башмакова Алёна — тренер K-pop" loading="lazy" />
                 <div className="about__stats">
                   {trainerHighlights.map((item) => (
                     <div key={item.label}>
