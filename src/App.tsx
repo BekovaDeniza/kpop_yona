@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
-import trainerPhoto from './assets/photo_2024-07-08_02-01-22.jpg'
+import trainerPhoto from './assets/photo_2024-07-08_02-01-22.jpg?url'
 
 type ScheduleKey = 'weekdays' | 'weekend'
 

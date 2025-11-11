@@ -1,9 +1,9 @@
-declare module '*.jpg' {
+declare module '*.jpg?url' {
   const src: string
   export default src
 }
 
-declare module '*.jpeg' {
+declare module '*.jpeg?url' {
   const src: string
   export default src
 }
