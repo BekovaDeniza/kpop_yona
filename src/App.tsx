@@ -84,10 +84,10 @@ const howCards = [
   {
     title: 'Локация',
     description:
-      'Студия Dance Loft, Москва, ул. Покровка, 28. Светлый зал, зеркала, профессиональный пол и оборудование.',
+      'г. Москва, м. Войковская, 5-й Новоподмосковный пер., 6. Светлый зал с зеркалами и профессиональным покрытием.',
     link: {
-      label: 'Открыть на карте',
-      href: 'https://yandex.ru/maps/-/CCUeeOgdTC',
+      label: 'Маршрут к залу у Войковской',
+      href: 'https://yandex.ru/maps/-/CHQAEBt2',
     },
   },
   {
@@ -165,7 +165,8 @@ const contactItems = [
   { label: 'WhatsApp:', value: 'Написать', href: 'https://wa.me/79991234567' },
   { label: 'Telegram:', value: '@kpop_school', href: 'https://t.me/kpop_school' },
   { label: 'Instagram:', value: '/kpop_school', href: 'https://instagram.com/kpop_school' },
-  { label: 'Адрес:', value: 'Москва, ул. Покровка, 28' },
+  { label: 'Адрес (Войковская):', value: 'г. Москва, м. Войковская, 5-й Новоподмосковный пер., 6' },
+  { label: 'Адрес (Аэропорт):', value: 'г. Москва, м. Аэропорт, ул. Усиевича, 12' },
 ]
 
 export default function App() {
