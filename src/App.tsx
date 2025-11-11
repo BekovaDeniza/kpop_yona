@@ -161,10 +161,14 @@ const socialLinks = [
 ]
 
 const contactItems = [
-  { label: 'Телефон:', value: '+7 (999) 123-45-67', href: 'tel:+79991234567' },
-  { label: 'WhatsApp:', value: 'Написать', href: 'https://wa.me/79991234567' },
-  { label: 'Telegram:', value: '@kpop_school', href: 'https://t.me/kpop_school' },
-  { label: 'Instagram:', value: '/kpop_school', href: 'https://instagram.com/kpop_school' },
+  { label: 'Телефон:', value: '+7 904 808 1084', href: 'tel:+79048081084' },
+  { label: 'WhatsApp:', value: '+7 904 808 1084', href: 'https://wa.me/79048081084' },
+  { label: 'Telegram:', value: '@alyonaayona', href: 'https://t.me/alyonaayona' },
+  {
+    label: 'Instagram:',
+    value: '@addloveu',
+    href: 'https://www.instagram.com/addloveu?igsh=MTJxcjM3aTh6bXJndg==',
+  },
   { label: 'Адрес (Войковская):', value: 'г. Москва, м. Войковская, 5-й Новоподмосковный пер., 6' },
   { label: 'Адрес (Аэропорт):', value: 'г. Москва, м. Аэропорт, ул. Усиевича, 12' },
 ]
@@ -173,6 +177,8 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSchedule, setActiveSchedule] = useState<ScheduleKey>('weekdays')
   const [toastVisible, setToastVisible] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (!toastVisible) {
@@ -183,10 +189,73 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [toastVisible])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setToastVisible(true)
-    event.currentTarget.reset()
+    if (isSubmitting) {
+      return
+    }
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = (formData.get('name') as string | null)?.trim() ?? ''
+    const phone = (formData.get('phone') as string | null)?.trim() ?? ''
+    const lessonFormat = (formData.get('format') as string | null) ?? ''
+    const comment = (formData.get('message') as string | null)?.trim() ?? ''
+
+    const formatTitles: Record<string, string> = {
+      individual: 'Индивидуальные',
+      group: 'Групповые',
+      masterclass: 'Мастер-класс',
+    }
+    const formatLabel = formatTitles[lessonFormat] ?? lessonFormat
+
+    const token = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
+    const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID
+
+    if (!token || !chatId) {
+      console.error('Telegram credentials are not configured in environment variables.')
+      setToastMessage('Ошибка: интеграция с Telegram не настроена.')
+      setToastVisible(true)
+      return
+    }
+
+    const textLines = [
+      'Новая заявка на урок K-pop',
+      `Имя: ${name}`,
+      `Контакт: ${phone}`,
+      `Формат: ${formatLabel}`,
+    ]
+
+    if (comment) {
+      textLines.push(`Комментарий: ${comment}`)
+    }
+
+    const telegramText = textLines.join('\n')
+
+    try {
+      setIsSubmitting(true)
+      const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: telegramText,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Telegram API responded with status ${response.status}`)
+      }
+
+      setToastMessage('Спасибо! Мы свяжемся с вами в ближайшее время.')
+      form.reset()
+    } catch (error) {
+      console.error('Failed to send Telegram message', error)
+      setToastMessage('Не удалось отправить заявку. Попробуйте позже.')
+    } finally {
+      setToastVisible(true)
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -481,8 +550,8 @@ export default function App() {
                   Комментарий
                   <textarea name="message" rows={3} placeholder="Что бы вы хотели выучить?" />
                 </label>
-                <button type="submit" className="button button--primary">
-                  Записаться
+                <button type="submit" className="button button--primary" disabled={isSubmitting}>
+                  {isSubmitting ? 'Отправляем заявку...' : 'Записаться'}
                 </button>
                 <p className="form-note">Нажимая на кнопку, вы соглашаетесь с политикой конфиденциальности.</p>
               </form>
@@ -522,7 +591,7 @@ export default function App() {
       </footer>
 
       <div className={`toast ${toastVisible ? 'is-visible' : ''}`} role="status" aria-live="polite" aria-atomic="true">
-        <p>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+        <p>{toastMessage || 'Готовы ответить на ваши вопросы!'}</p>
       </div>
     </>
   )
