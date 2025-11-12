@@ -679,6 +679,15 @@ section h2 {
     padding: 24px 0 64px;
   }
 
+  .hero__badge {
+    top: auto;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
   .nav__toggle {
     display: inline-flex;
   }
