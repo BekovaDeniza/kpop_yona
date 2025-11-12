@@ -680,12 +680,11 @@ section h2 {
   }
 
   .hero__badge {
+    position: relative;
     top: auto;
-    bottom: 24px;
     left: 16px;
-    right: 16px;
-    width: fit-content;
-    margin: 0 auto;
+    align-self: flex-start;
+    margin-bottom: 16px;
   }
 
   .nav__toggle {
