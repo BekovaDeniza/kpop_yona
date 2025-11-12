@@ -262,7 +262,6 @@ export default function App() {
     <>
       <header className="hero" id="top">
         <div className="hero__media" aria-hidden>
-          <div className="hero__badge">K-pop School</div>
           <video
             className="hero__video"
             src="https://cdn.coverr.co/videos/coverr-dance-class-on-stage-0960/1080p.mp4"

@@ -120,19 +120,6 @@ section h2 {
   filter: brightness(0.45);
 }
 
-.hero__badge {
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  z-index: 1;
-  padding: 12px 22px;
-  border-radius: 999px;
-  backdrop-filter: blur(18px);
-  background: rgba(255, 255, 255, 0.1);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
 .hero__content {
   position: relative;
   z-index: 1;
@@ -150,10 +137,17 @@ section h2 {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 18px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 999px;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav__toggle {
@@ -679,14 +673,6 @@ section h2 {
     padding: 24px 0 64px;
   }
 
-  .hero__badge {
-    position: relative;
-    top: auto;
-    left: 16px;
-    align-self: flex-start;
-    margin-bottom: 16px;
-  }
-
   .nav__toggle {
     display: inline-flex;
   }
@@ -744,11 +730,6 @@ section h2 {
 @media (max-width: 520px) {
   .section {
     padding: 64px 0;
-  }
-
-  .hero__badge {
-    font-size: 12px;
-    padding: 8px 14px;
   }
 
   .hero__text {
